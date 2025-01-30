@@ -64,6 +64,18 @@ public static class SetsAndMaps
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
+            // Item 4, index 3, on each line is set to be the degree
+            var degree = fields[3];
+            // Check if dictionary already contains that degree, 
+            // if it does not, add degree to dictionary
+            if (degrees.ContainsKey(degree))
+            {
+                degrees[degree]++;
+            }
+            else
+            {
+                degrees[degree] = 1;
+            }
         }
 
         return degrees;
@@ -88,7 +100,36 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        var w1 = word1.ToLower().Replace(" ", "");
+        var w2 = word2.ToLower().Replace(" ", "");
+        if (w1.Length != w2.Length)
+        {
+            return false;
+        }
+
+        var anagram = new Dictionary<char, int>();
+
+        foreach (char k in w1)
+        {
+            if (anagram.ContainsKey(k))
+            {
+                anagram[k]++;
+            }
+            else
+            {
+                anagram[k] = 1;
+            }
+        }
+        
+        foreach (char k in w2)
+        {
+            if (!anagram.ContainsKey(k) || anagram[k] == 0)
+            {
+                return false;
+            }
+            anagram[k]--;
+        }
+        return true;
     }
 
     /// <summary>
